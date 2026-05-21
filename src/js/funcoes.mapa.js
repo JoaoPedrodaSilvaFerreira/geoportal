@@ -232,25 +232,38 @@ function buscarEZoom(filtro, valor) {
   var bounds = L.latLngBounds([]);
   var encontrou = false;
 
+  console.log(valor);
+
+  
   camada.eachLayer(function (layer) {
-    const props = layer.feature.properties;
+    const element = layer.getElement?.();
+     
+    //remove a formatação da layer pesquisada
+    if (element) {
+      element.classList.remove("pesquisado"); 
+      layer.setStyle({
+        color: null,
+        weight: 0
+      });
+    }
 
-    if (
-      props[filtro] &&
-      props[filtro].toString().toUpperCase().includes(valor.toUpperCase())
-    ) {
+
+    var props = layer.feature.properties;
+
+
+    if (props[filtro] && props[filtro].toString().toUpperCase().includes(valor.toUpperCase())) 
+    {
       encontrou = true;
-
-      console.log(props);
-
-   
+        
       if (layer.setStyle) {
         layer.setStyle({
           color: 'red',
-          fillColor: 'black',
           weight: 4
         });
       }
+      console.log(layer);
+
+      layer.getElement().classList.add("pesquisado");
 
       // acumula bounds
       if (layer.getBounds) {
