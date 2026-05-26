@@ -1,19 +1,23 @@
 
 // função para receber valor do filtro e enviar parametro para criar a mascara
 function enviarPara() {
-  filtro = document.getElementById("filtroMapa").value;
+
   const input = document.getElementById("search");
 
   input.oninput = function () {
+
+    const filtro = document.getElementById("filtroMapa").value;
+
     mascara(this, filtro);
   };
 }
+
 
 // função que cria a mascara 
 function mascara(input, tipo) {
   let valor = input.value.replace(/\D/g, ''); // remove tudo que não for número
 
-  if (tipo === 'cod_geo_l') {
+  if (tipo === 'Inscrição') {
     input.maxLength = 14;
     valor = valor
       .replace(/^(\d{2})(\d)/, '$1.$2')
@@ -24,10 +28,8 @@ function mascara(input, tipo) {
     input.value = valor;
 
   }
-  if (tipo === 'cep') {
+  if (tipo === 'CEP') {
     input.maxLength = 9; // 8 números + 1 hífen
-
-    let valor = input.value.replace(/\D/g, '');
 
     valor = valor
       .replace(/^(\d{5})(\d)/, '$1-$2');
